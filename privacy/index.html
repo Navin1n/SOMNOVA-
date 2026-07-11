@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Privacy — Somnova</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&family=Inter:wght@400;600&family=IBM+Plex+Mono&display=swap" rel="stylesheet" />
+<style>
+  :root{--ink:#07060B;--veil:#171327;--haze:#A99CF0;--moon:#E8D6A0;--text:#F4F2FA;--dim:#9A93B5;--faint:#5C5675}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--ink);color:var(--text);font-family:'Inter',sans-serif;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:48px 24px 80px}
+  a{color:var(--haze)}
+  .logo{font-family:'IBM Plex Mono',monospace;letter-spacing:4px;font-size:14px;color:var(--text);text-decoration:none}
+  .logo em{color:var(--moon);font-style:normal}
+  h1{font-family:'Playfair Display',serif;font-weight:400;font-size:40px;margin:36px 0 6px}
+  .updated{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--faint);text-transform:uppercase}
+  h2{font-family:'Playfair Display',serif;font-weight:400;font-size:24px;margin:40px 0 12px}
+  p,li{color:var(--dim);font-size:15.5px;margin-bottom:12px}
+  ul{padding-left:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="logo" href="../">SOMN<em>O</em>VA</a>
+  <h1>Privacy policy</h1>
+  <p class="updated">Last updated 11 July 2026</p>
+
+  <p>Somnova records your dreams and turns them into short films and interpretations. Dreams are intimate, so this policy is short and plain.</p>
+
+  <h2>What we collect</h2>
+  <ul>
+    <li><strong>Account:</strong> an anonymous account identifier. No email or phone number is required. If you later add an email to protect your archive, we store it for sign-in only.</li>
+    <li><strong>Your sign &amp; optional birth details:</strong> the zodiac sign you choose; optionally your birth date, time, and place if you add them to deepen the astrological reading.</li>
+    <li><strong>Preferences:</strong> who the dreamer in your films is (woman / man / they-them) and your chosen dream perspective.</li>
+    <li><strong>Dreams:</strong> the audio you record, its transcript, the generated video and interpretation, and the symbols found in it.</li>
+    <li><strong>Purchases:</strong> subscriptions are processed by Apple and managed through RevenueCat. We receive your subscription status tied to your anonymous account id — never your card details.</li>
+    <li><strong>Device:</strong> an optional push-notification token so we can tell you when your dream is ready. Crash reports (Sentry) contain no dream content and no personal identifiers.</li>
+  </ul>
+
+  <h2>How your dream is processed</h2>
+  <p>To create your result, your dream audio and text are sent to external AI providers: transcription and content moderation (OpenAI), interpretation (Anthropic), and image/video generation (fal.ai or Replicate). These providers process your dream content to produce your film and reading. We send only what is needed — never your identity alongside it.</p>
+
+  <h2>What we never do</h2>
+  <ul>
+    <li>We never sell your data or share it with advertisers.</li>
+    <li>Your dreams are never public and are never used to train our own models.</li>
+    <li>No one else can access your dreams: access is enforced per-account at the database level.</li>
+  </ul>
+
+  <h2>Where it lives</h2>
+  <p>Your data is stored with Supabase (database and file storage) behind row-level security scoped to your account. Dream audio lives in a private bucket only your account can read.</p>
+
+  <h2>Deleting everything</h2>
+  <p>In the app: Account → Delete account. This permanently removes your account, every dream, all generated media, and your audio files. It cannot be undone. You can also email us at the address below.</p>
+
+  <h2>Not advice</h2>
+  <p>Interpretations are for reflection and entertainment only — they are not medical, psychological, or clinical advice.</p>
+
+  <h2>Contact</h2>
+  <p>Questions or requests: <a href="mailto:navinderjit.dhaliwal101@gmail.com">navinderjit.dhaliwal101@gmail.com</a></p>
+</div>
+</body>
+</html>

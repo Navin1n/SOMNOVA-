@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Somnova — Speak your dream. Watch it back.</title>
+<meta name="description" content="A calm morning ritual: speak your dream on waking and Somnova turns it into a short cinematic film, read through your star sign." />
+<meta property="og:title" content="Somnova — Speak your dream. Watch it back." />
+<meta property="og:description" content="Your dreams, turned into short films and read through your chart. One dream a day." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#07060B; --obsidian:#0E0C16; --veil:#171327;
+    --indigo:#3B2E6E; --violet:#6C5CE0; --haze:#A99CF0; --moon:#E8D6A0;
+    --text:#F4F2FA; --dim:#9A93B5; --faint:#5C5675;
+    --display:'Playfair Display',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--haze);text-transform:uppercase}
+
+  /* star field */
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .stars span{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--haze);opacity:.35;animation:tw 4s ease-in-out infinite}
+  .stars span:nth-child(2n){background:var(--moon);animation-delay:1.3s;animation-duration:5.5s}
+  .stars span:nth-child(3n){width:1px;height:1px;animation-delay:2.1s}
+  @keyframes tw{0%,100%{opacity:.12}50%{opacity:.6}}
+  main{position:relative;z-index:1}
+
+  nav{display:flex;justify-content:space-between;align-items:center;padding:28px 0}
+  .logo{font-family:var(--mono);letter-spacing:4px;font-size:14px;color:var(--text)}
+  .logo em{color:var(--moon);font-style:normal}
+  nav .links{display:flex;gap:28px;font-size:14px;color:var(--dim)}
+  nav .links a:hover{color:var(--text)}
+
+  .hero{padding:96px 0 72px;text-align:center}
+  .hero h1{font-family:var(--display);font-weight:400;font-size:clamp(42px,7vw,76px);line-height:1.08;margin:20px auto 24px;max-width:800px}
+  .hero h1 em{font-style:italic;color:var(--haze)}
+  .hero p{color:var(--dim);font-size:19px;max-width:540px;margin:0 auto 40px}
+  .cta{display:inline-block;background:var(--violet);border-radius:999px;padding:17px 44px;font-weight:600;font-size:16px;transition:transform .2s,box-shadow .2s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(108,92,224,.45)}
+  .cta.ghost{background:transparent;border:1px solid var(--veil);color:var(--dim);margin-left:14px}
+  .cta.ghost:hover{color:var(--text);box-shadow:none}
+  .hero .note{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--faint);margin-top:22px;text-transform:uppercase}
+
+  /* phone */
+  .phone-wrap{display:flex;justify-content:center;padding:24px 0 90px}
+  .phone{width:300px;height:620px;border-radius:44px;border:1px solid var(--veil);background:linear-gradient(160deg,#0E0C16,#0A0812 60%);box-shadow:0 30px 90px rgba(59,46,110,.35);padding:18px;position:relative}
+  .phone::before{content:"";position:absolute;top:18px;left:50%;transform:translateX(-50%);width:110px;height:26px;border-radius:999px;background:#000}
+  .screen{height:100%;border-radius:30px;background:radial-gradient(120% 90% at 50% 0%,#1a1430 0%,#0A0812 55%);padding:56px 20px 20px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+  .screen .k{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--haze)}
+  .screen h3{font-family:var(--display);font-weight:400;font-size:26px}
+  .dream-card{background:rgba(23,19,39,.6);border:1px solid var(--veil);border-radius:14px;padding:14px}
+  .dream-card .d{font-family:var(--mono);font-size:8px;letter-spacing:1.5px;color:var(--faint);margin-bottom:6px}
+  .dream-card .d b{color:var(--moon);font-weight:500}
+  .dream-card p{font-family:var(--display);font-size:14px;line-height:1.45;color:var(--text)}
+  .rec{margin-top:auto;background:var(--violet);border-radius:999px;text-align:center;padding:13px;font-size:13px;font-weight:600}
+
+  section{padding:90px 0}
+  .sec-head{text-align:center;margin-bottom:56px}
+  .sec-head h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4.5vw,44px);margin-top:14px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .card{background:var(--obsidian);border:1px solid var(--veil);border-radius:20px;padding:30px}
+  .card .n{font-family:var(--mono);color:var(--moon);font-size:12px;letter-spacing:2px}
+  .card h3{font-family:var(--display);font-weight:400;font-size:22px;margin:12px 0 10px}
+  .card p{color:var(--dim);font-size:14.5px}
+
+  .lenses .card{border-color:transparent;background:linear-gradient(var(--obsidian),var(--obsidian)) padding-box,linear-gradient(140deg,var(--indigo),transparent 60%) border-box;border:1px solid transparent}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  .split h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4vw,40px);margin:14px 0 18px}
+  .split p{color:var(--dim);margin-bottom:16px}
+  .split .go{color:var(--moon);font-family:var(--mono);font-size:13px;letter-spacing:1.5px}
+  .split .go:hover{text-decoration:underline}
+  .sign-ring{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .sign{aspect-ratio:1;border:1px solid var(--veil);border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:var(--obsidian)}
+  .sign i{font-style:normal;font-size:22px;color:var(--moon)}
+  .sign small{font-family:var(--mono);font-size:9px;letter-spacing:1.5px;color:var(--faint);text-transform:uppercase}
+
+  .price-card{max-width:460px;margin:0 auto;text-align:center;background:var(--obsidian);border:1px solid var(--indigo);border-radius:28px;padding:52px 40px;box-shadow:0 20px 80px rgba(59,46,110,.25)}
+  .price-card .amt{font-family:var(--display);font-size:54px;margin:18px 0 4px}
+  .price-card .per{color:var(--faint);font-family:var(--mono);font-size:12px;letter-spacing:2px}
+  .price-card ul{list-style:none;margin:28px 0;text-align:left}
+  .price-card li{color:var(--dim);padding:9px 0;border-bottom:1px solid var(--veil);font-size:15px}
+  .price-card li::before{content:"✦";color:var(--moon);margin-right:12px;font-size:12px}
+  .price-card li:last-child{border:none}
+
+  footer{border-top:1px solid var(--veil);padding:44px 0;color:var(--faint);font-size:13px}
+  footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  footer a:hover{color:var(--dim)}
+  .disclaimer{margin-top:14px;font-size:12px;max-width:640px}
+
+  @media(max-width:760px){
+    .split{grid-template-columns:1fr;gap:40px}
+    nav .links{display:none}
+    .cta.ghost{margin-left:0;margin-top:12px}
+  }
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<main>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="#">SOMN<em>O</em>VA</a>
+      <div class="links">
+        <a href="#how">How it works</a>
+        <a href="#lenses">The reading</a>
+        <a href="lucid/">Lucid</a>
+        <a href="#price">Pricing</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="kicker">A morning ritual for dreamers</span>
+      <h1>Speak your dream.<br /><em>Watch it back.</em></h1>
+      <p>The moment you wake, say what you saw. Somnova turns it into a short cinematic film — and reads it through your star sign.</p>
+      <a class="cta" href="#price">Begin your ritual</a>
+      <a class="cta ghost" href="#how">See how it works</a>
+      <div class="note">iPhone · One dream a day · Yours alone</div>
+    </header>
+
+    <div class="phone-wrap">
+      <div class="phone"><div class="screen">
+        <span class="k">SOMNOVA</span>
+        <h3>Dreams</h3>
+        <div class="dream-card"><div class="d">TUE 30 JUN &nbsp;·&nbsp; <b>✦ LUCID</b></div><p>I was in my nan's kitchen but the walls were breathing, and the sea was outside every window…</p></div>
+        <div class="dream-card"><div class="d">MON 29 JUN</div><p>Falling upward through a library, all the books opening at once like birds…</p></div>
+        <div class="dream-card"><div class="d">SUN 28 JUN</div><p>A train station where everyone had my mother's voice…</p></div>
+        <div class="rec">Record a dream</div>
+      </div></div>
+    </div>
+
+    <section id="how">
+      <div class="sec-head">
+        <span class="kicker">The ritual</span>
+        <h2>From half-remembered to unforgettable</h2>
+      </div>
+      <div class="grid">
+        <div class="card"><span class="n">01</span><h3>Wake &amp; speak</h3><p>Eyes still closed, trigger recording with a triple-tap on the back of your phone. Just talk — dreams fade in minutes, your voice is faster than any keyboard.</p></div>
+        <div class="card"><span class="n">02</span><h3>It listens</h3><p>Your words are written down and read for symbols, feelings, and the single most vivid moment of the dream.</p></div>
+        <div class="card"><span class="n">03</span><h3>It paints</h3><p>That moment becomes a short, dreamlike vertical film — soft light, deep indigo, moonlit gold. Your dream, the way it felt.</p></div>
+        <div class="card"><span class="n">04</span><h3>It stays</h3><p>Every film joins your private archive. Recurring symbols surface over time — the language your dreams keep speaking.</p></div>
+      </div>
+    </section>
+
+    <section id="lenses" class="lenses">
+      <div class="sec-head">
+        <span class="kicker">The reading</span>
+        <h2>Four lenses, one dream</h2>
+      </div>
+      <div class="grid">
+        <div class="card"><h3>Symbolic</h3><p>What the water, the house, the falling might stand for — grounded in what you actually said.</p></div>
+        <div class="card"><h3>Emotional</h3><p>The feeling underneath the imagery, named gently.</p></div>
+        <div class="card"><h3>Astrological</h3><p>The dream read through your sun sign — a Scorpio's flood is not a Gemini's.</p></div>
+        <div class="card"><h3>Reflective</h3><p>One quiet question to carry into the day.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <div>
+          <span class="kicker">Written in your stars</span>
+          <h2>Your chart is the key it's read with</h2>
+          <p>Somnova asks one thing at the start: when you were born. Every interpretation after that is tuned to your sign — its element, its ruling themes, the way it dreams.</p>
+          <p>Not a horoscope pasted on top. The same dream lands differently for every sign, and the reading knows it.</p>
+        </div>
+        <div class="sign-ring">
+          <div class="sign"><i>♈</i><small>Aries</small></div><div class="sign"><i>♉</i><small>Taurus</small></div><div class="sign"><i>♊</i><small>Gemini</small></div><div class="sign"><i>♋</i><small>Cancer</small></div>
+          <div class="sign"><i>♌</i><small>Leo</small></div><div class="sign"><i>♍</i><small>Virgo</small></div><div class="sign"><i>♎</i><small>Libra</small></div><div class="sign"><i>♏</i><small>Scorpio</small></div>
+          <div class="sign"><i>♐</i><small>Sagittarius</small></div><div class="sign"><i>♑</i><small>Capricorn</small></div><div class="sign"><i>♒</i><small>Aquarius</small></div><div class="sign"><i>♓</i><small>Pisces</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="split">
+        <div class="sign-ring" style="grid-template-columns:1fr 1fr">
+          <div class="sign" style="aspect-ratio:auto;padding:22px"><i>✦</i><small>Dream signs</small></div>
+          <div class="sign" style="aspect-ratio:auto;padding:22px"><i>☾</i><small>Reality checks</small></div>
+          <div class="sign" style="aspect-ratio:auto;padding:22px"><i>◉</i><small>MILD</small></div>
+          <div class="sign" style="aspect-ratio:auto;padding:22px"><i>↻</i><small>WBTB</small></div>
+        </div>
+        <div>
+          <span class="kicker">Go further</span>
+          <h2>Learn to wake up <em style="color:var(--haze)">inside</em> the dream</h2>
+          <p>Because you record every morning, Somnova knows your recurring dream signs — the exact triggers lucid dreamers train themselves to notice. Reality-check reminders and proven techniques are built in.</p>
+          <a class="go" href="lucid/">EXPLORE LUCID DREAMING →</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="price">
+      <div class="sec-head">
+        <span class="kicker">Pricing</span>
+        <h2>One ritual. One price.</h2>
+      </div>
+      <div class="price-card">
+        <span class="kicker">Somnova</span>
+        <div class="amt">Your first dream is free</div>
+        <span class="per">THEN A SIMPLE SUBSCRIPTION</span>
+        <ul>
+          <li>A cinematic dream film every morning</li>
+          <li>Four-lens reading through your sign</li>
+          <li>Private archive with recurring symbols</li>
+          <li>Full lucid dreaming toolkit</li>
+          <li>Hands-free wake-and-speak capture</li>
+        </ul>
+        <a class="cta" href="#">Coming soon to the App Store</a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="row">
+        <span>© 2026 Somnova</span>
+        <span><a href="privacy/">Privacy</a> &nbsp;·&nbsp; <a href="support/">Support</a> &nbsp;·&nbsp; <a href="lucid/">Lucid dreaming</a></span>
+      </div>
+      <p class="disclaimer">Somnova is for reflection and entertainment. Interpretations are not medical, psychological, or clinical advice. Dream video is generated with AI from your own description.</p>
+    </div>
+  </footer>
+</main>
+<script>
+  const f=document.getElementById('stars');
+  for(let i=0;i<90;i++){const s=document.createElement('span');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*5)+'s';f.appendChild(s)}
+</script>
+</body>
+</html>

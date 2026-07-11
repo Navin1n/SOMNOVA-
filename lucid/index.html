@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lucid dreaming with Somnova — wake up inside the dream</title>
+<meta name="description" content="Somnova turns your nightly dream journal into a lucid dreaming practice: personal dream signs, reality-check reminders, and proven techniques." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#07060B; --obsidian:#0E0C16; --veil:#171327;
+    --indigo:#3B2E6E; --violet:#6C5CE0; --haze:#A99CF0; --moon:#E8D6A0;
+    --text:#F4F2FA; --dim:#9A93B5; --faint:#5C5675;
+    --display:'Playfair Display',serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:3px;color:var(--haze);text-transform:uppercase}
+  .stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .stars span{position:absolute;width:2px;height:2px;border-radius:50%;background:var(--haze);opacity:.35;animation:tw 4s ease-in-out infinite}
+  .stars span:nth-child(2n){background:var(--moon);animation-delay:1.3s;animation-duration:5.5s}
+  @keyframes tw{0%,100%{opacity:.12}50%{opacity:.6}}
+  main{position:relative;z-index:1}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:28px 0}
+  .logo{font-family:var(--mono);letter-spacing:4px;font-size:14px}
+  .logo em{color:var(--moon);font-style:normal}
+  nav .links{display:flex;gap:28px;font-size:14px;color:var(--dim)}
+  nav .links a:hover{color:var(--text)}
+
+  .hero{padding:90px 0 70px;text-align:center}
+  .hero h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,6.5vw,68px);line-height:1.1;margin:20px auto 24px;max-width:820px}
+  .hero h1 em{font-style:italic;color:var(--haze)}
+  .hero p{color:var(--dim);font-size:19px;max-width:600px;margin:0 auto 38px}
+  .cta{display:inline-block;background:var(--violet);border-radius:999px;padding:17px 44px;font-weight:600;font-size:16px;transition:transform .2s,box-shadow .2s}
+  .cta:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(108,92,224,.45)}
+
+  .loop{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;padding:40px 0 80px}
+  .loop .step{background:var(--obsidian);border:1px solid var(--veil);border-radius:20px;padding:26px;position:relative}
+  .loop .step::after{content:"→";position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--faint);z-index:2}
+  .loop .step:last-child::after{content:"↻"}
+  .loop .n{font-family:var(--mono);color:var(--moon);font-size:11px;letter-spacing:2px}
+  .loop h3{font-family:var(--display);font-weight:400;font-size:19px;margin:10px 0 8px}
+  .loop p{color:var(--dim);font-size:13.5px}
+
+  section{padding:80px 0}
+  .sec-head{text-align:center;margin-bottom:52px}
+  .sec-head h2{font-family:var(--display);font-weight:400;font-size:clamp(30px,4.5vw,42px);margin-top:14px}
+  .sec-head p{color:var(--dim);max-width:620px;margin:14px auto 0}
+
+  .signs{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:640px;margin:0 auto}
+  .chip{font-family:var(--mono);font-size:13px;letter-spacing:1px;color:var(--moon);border:1px solid var(--veil);border-radius:999px;padding:10px 20px;background:var(--obsidian)}
+  .chip b{color:var(--faint);font-weight:400}
+
+  .tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .tech{background:var(--obsidian);border:1px solid var(--veil);border-radius:22px;padding:34px}
+  .tech .tag{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--faint);text-transform:uppercase}
+  .tech h3{font-family:var(--display);font-weight:400;font-size:24px;margin:12px 0 12px}
+  .tech p{color:var(--dim);font-size:15px}
+  .tech.hero-card{grid-column:1/-1;background:linear-gradient(140deg,#151030,var(--obsidian) 70%);border-color:var(--indigo)}
+
+  .honest{max-width:680px;margin:0 auto;text-align:center}
+  .honest blockquote{font-family:var(--display);font-size:clamp(22px,3.5vw,30px);font-style:italic;color:var(--haze);line-height:1.5}
+  .honest p{color:var(--dim);margin-top:22px}
+
+  footer{border-top:1px solid var(--veil);padding:44px 0;color:var(--faint);font-size:13px}
+  footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  footer a:hover{color:var(--dim)}
+  .disclaimer{margin-top:14px;font-size:12px;max-width:640px}
+  @media(max-width:760px){.tech-grid{grid-template-columns:1fr}nav .links{display:none}.loop .step::after{display:none}}
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+<main>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../">SOMN<em>O</em>VA</a>
+      <div class="links">
+        <a href="index.html#how">How it works</a>
+        <a href="#signs">Dream signs</a>
+        <a href="#techniques">Techniques</a>
+        <a href="index.html#price">Pricing</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="kicker">Lucid dreaming · Built into Somnova</span>
+      <h1>Wake up <em>inside</em> the dream</h1>
+      <p>A lucid dream is one where you know you're dreaming — while it's still happening. It's a learnable skill, and the journal you're already keeping is the foundation every method is built on.</p>
+      <a class="cta" href="index.html#price">Start your practice</a>
+    </header>
+
+    <div class="loop">
+      <div class="step"><span class="n">EVERY MORNING</span><h3>Record the dream</h3><p>Speak it on waking. Recall is the muscle — this is the rep.</p></div>
+      <div class="step"><span class="n">OVER TIME</span><h3>Signs emerge</h3><p>Somnova counts what recurs: water, teeth, your old school, flying.</p></div>
+      <div class="step"><span class="n">DURING THE DAY</span><h3>Reality checks</h3><p>Gentle reminders to ask: am I dreaming right now?</p></div>
+      <div class="step"><span class="n">ONE NIGHT</span><h3>You notice</h3><p>A dream sign appears, the habit fires — and you're awake inside it.</p></div>
+    </div>
+
+    <section id="signs">
+      <div class="sec-head">
+        <span class="kicker">Your unfair advantage</span>
+        <h2>Dream signs, found for you</h2>
+        <p>Most lucid dreamers spend months combing a paper journal for patterns. Somnova reads every dream you record and surfaces your personal recurring symbols automatically. See one tonight? That's your cue.</p>
+      </div>
+      <div class="signs">
+        <span class="chip">water <b>×7</b></span>
+        <span class="chip">flying <b>×5</b></span>
+        <span class="chip">childhood home <b>×4</b></span>
+        <span class="chip">teeth <b>×3</b></span>
+        <span class="chip">the sea <b>×3</b></span>
+        <span class="chip">mirrors <b>×2</b></span>
+        <span class="chip">a locked door <b>×2</b></span>
+      </div>
+    </section>
+
+    <section id="techniques">
+      <div class="sec-head">
+        <span class="kicker">In the app</span>
+        <h2>Proven techniques, honestly told</h2>
+      </div>
+      <div class="tech-grid">
+        <div class="tech hero-card">
+          <span class="tag">The daytime habit</span>
+          <h3>Reality-check reminders</h3>
+          <p>Three silent nudges a day: look at your hands, re-read a line of text, ask how you got here. In dreams these tend to warp. Done with real doubt, the habit follows you across the threshold of sleep — and one night the answer to "am I dreaming?" is yes. Somnova schedules them for you; ignore them freely, honour them when you can.</p>
+        </div>
+        <div class="tech">
+          <span class="tag">Before sleep</span>
+          <h3>MILD — set an intention</h3>
+          <p>As you drift off, replay a recent dream and repeat one sentence: next time I'm dreaming, I'll notice I'm dreaming. The most-studied induction method there is.</p>
+        </div>
+        <div class="tech">
+          <span class="tag">For committed nights</span>
+          <h3>WBTB — wake back to bed</h3>
+          <p>Wake five hours in, stay softly awake for twenty minutes with your dream signs, then return to sleep holding your intention. You go straight back into long REM — the easiest doorway.</p>
+        </div>
+        <div class="tech">
+          <span class="tag">In your archive</span>
+          <h3>Mark your lucid dreams</h3>
+          <p>Had one? Tap "I knew I was dreaming" on the dream. Your lucid count grows in your practice hub — proof the training is working.</p>
+        </div>
+        <div class="tech">
+          <span class="tag">The foundation</span>
+          <h3>The journal you already keep</h3>
+          <p>Every lucid method starts with dream recall, and recall is built by recording. Somnova's one-dream-a-day ritual is the practice, disguised as a moment for yourself.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="honest">
+        <blockquote>"Most people need weeks of consistency. That's normal, and worth saying out loud."</blockquote>
+        <p>No app can guarantee a lucid dream — anyone who promises one is selling you something else. What Somnova does is remove the tedious parts of a real practice: the journaling discipline, the pattern-finding, the reminders. The noticing is yours.</p>
+      </div>
+    </section>
+
+    <section style="text-align:center;padding-top:20px">
+      <a class="cta" href="index.html#price">Begin with tonight's dream</a>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <div class="row">
+        <span>© 2026 Somnova</span>
+        <span><a href="../privacy/">Privacy</a> &nbsp;·&nbsp; <a href="../">Home</a></span>
+      </div>
+      <p class="disclaimer">Somnova is for reflection and entertainment. Lucid dreaming techniques are described for general information; nothing here is medical or psychological advice. If you have a sleep disorder, talk to a professional before altering your sleep.</p>
+    </div>
+  </footer>
+</main>
+<script>
+  const f=document.getElementById('stars');
+  for(let i=0;i<90;i++){const s=document.createElement('span');s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*5)+'s';f.appendChild(s)}
+</script>
+</body>
+</html>
