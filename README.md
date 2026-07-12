@@ -1,4 +1,4 @@
-# Somnova — public site
+# Seluna — public site
 
 The hosted pages Apple's App Review checks: privacy policy, support, and the
 landing page. Served via GitHub Pages.
@@ -10,4 +10,4 @@ landing page. Served via GitHub Pages.
 
 **Enable hosting (one time):** repo Settings → Pages → "Deploy from a branch" →
 branch `main`, folder `/ (root)`. The site then serves at
-https://navin1n.github.io/SOMNOVA-/
+https://navin1n.github.io/SELUNA-/
